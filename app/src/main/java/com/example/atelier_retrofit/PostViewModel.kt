@@ -11,6 +11,12 @@ class PostViewModel : ViewModel() {
     private val _post = MutableLiveData<Post?>()
     val post: LiveData<Post?> = _post
 
+    private val _postAdded = MutableLiveData<Boolean>()
+    val postAdded: LiveData<Boolean> get() = _postAdded
+
+
+
+
     fun fetchPosts() {
         viewModelScope.launch {
             val response = repository.getPosts()
@@ -24,4 +30,13 @@ class PostViewModel : ViewModel() {
             _post.value = response
         }
     }
+
+
+    fun addPost(post: Post) {
+        viewModelScope.launch {
+            val response = repository.createPost(post)
+            _postAdded.value = response != null
+        }
+    }
+
 }

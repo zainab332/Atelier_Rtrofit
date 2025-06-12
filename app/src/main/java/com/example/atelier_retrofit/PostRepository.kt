@@ -18,4 +18,12 @@ class PostRepository {
             null
         }
     }
+    suspend fun createPost(post: Post): Post? {
+        return try {
+            apiService.createpost(post)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 }

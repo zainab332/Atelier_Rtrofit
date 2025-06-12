@@ -1,5 +1,6 @@
 package com.example.atelier_retrofit
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         val btnSearch = findViewById<Button>(R.id.btnSearch)
         val etPostId = findViewById<EditText>(R.id.etPostId)
         val tvPostDetails = findViewById<TextView>(R.id.tvPostDetails)
+        val btnAddPost = findViewById<Button>(R.id.btnAddPost)
+
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -40,6 +43,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        btnAddPost.setOnClickListener {
+            val intent = Intent(this, AddPostActivity::class.java)
+            startActivity(intent)
+        }
+
         // Observer liste des posts
         viewModel.posts.observe(this) { posts ->
             recyclerView.adapter = PostAdapter(posts)
@@ -48,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         // Observer un seul post
         viewModel.post.observe(this) { post ->
             if (post != null) {
-                tvPostDetails.text = "ID: ${post.id}\nTitre: ${post.titlr}\nContenu: ${post.body}"
+                tvPostDetails.text = "ID: ${post.id}\nTitre: ${post.title}\nContenu: ${post.body}"
             } else {
                 tvPostDetails.text = "Aucun post trouvé."
             }
